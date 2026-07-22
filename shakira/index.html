@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arizona Supplies Limited Uganda Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f1ea;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .container {
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 420px;
+        }
+        h2 { margin-top: 0; color: #2c3e50; text-align: center; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; color: #333; }
+        input, select {
+            width: 100%; padding: 10px; border: 1px solid #ccc;
+            border-radius: 5px; box-sizing: border-box;
+        }
+        button {
+            width: 100%; padding: 12px; background-color: #2c3e50;
+            color: white; border: none; border-radius: 5px;
+            font-size: 16px; font-weight: bold; cursor: pointer;
+        }
+        button:hover { background-color: #1a252f; }
+
+        /* Receipt Styles */
+        #receiptSection { display: none; }
+        .receipt {
+            font-family: 'Courier New', Courier, monospace;
+            border: 1px dashed #333; padding: 20px; background: #fff;
+        }
+        .divider { border-top: 1px dashed #333; margin: 15px 0; }
+        .row { display: flex; justify-content: space-between; margin-bottom: 8px; }
+        .total-row { font-weight: bold; font-size: 1.1em; }
+        .message-box {
+            background: #f9f9f9; border: 1px solid #ddd; padding: 10px;
+            margin-top: 15px; text-align: center; font-family: Arial, sans-serif;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- FORM SECTION -->
+    <div class="container" id="formSection">
+        <h2>Arizona Supplies Limited Uganda</h2>
+        <form id="calculatorForm">
+            <div class="form-group">
+                <label for="name">Customer Name</label>
+                <input type="text" id="name" required placeholder="e.g. Shakira Kagoya">
+            </div>
+
+            <div class="form-group">
+                <label for="generator_kva">Generator  (KVA)</label>
+                <select id="generator_kva" required>
+                    <option value="" disabled selected>Select kVA Rating</option>
+                    <option value="5">5 kVA Generator</option>
+                    <option value="10">10 kVA Generator</option>
+                    <option value="20">20 kVA Generator</option>
+                    <option value="30">30 kVA Generator</option>
+                    <option value="40">40 kVA Generator</option>
+                    <option value="320">320 kVA Generator</option>
+                    <option value="520">520 kVA Generator</option>
+                    <option value="1200">1200 kVA Generator</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="generators">Generators</label>
+                <input type="number" id="generators" min="0" required placeholder="0">
+            </div>
+
+            <div class="form-group">
+                <label for="total">Current Order($)</label>
+                <select id="total" required>
+                    <option value="" disabled selected>Select Order Total</option>
+                    <option value="127.00">$127.00</option>
+                    <option value="134.00">$134.00</option>
+                    <option value="289.00">$289.00</option>
+                    <option value="378.00">$378.00</option>
+                    <option value="396.00">$396.00</option>
+                    <option value="1345.00">$1,345.00</option>
+                    <option value="489.00">$489.00</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="discount_rate"> Discount</label>
+                <select id="discount_rate" required>
+                    <option value="0">0% Discount (Bronze Tier)</option>
+                    <option value="10">10% Discount (Silver Tier)</option>
+                    <option value="15">15% Discount (Gold Tier)</option>
+                    <option value="20">20% Discount (Platinum Tier)</option>
+                </select>
+            </div>
+
+            <button type="submit">Calculate Discount</button>
+        </form>
+    </div>
+
+    <!-- RECEIPT SECTION -->
+    <div class="container" id="receiptSection">
+        <div class="receipt">
+            <h3 style="text-align: center;">ARIZONA SUPPLIES LIMITED UGANDA</h3>
+            <p style="text-align: center; margin: 0;">Empowering  The Future</p>
+            <p style="text-align: center; margin: 0;">Official Sales Receipt</p>
+            
+            <div class="divider"></div>
+
+            <div class="row"><span>CUSTOMER:</span><span id="rName"></span></div>
+            <div class="row"><span>MODEL:</span><span id="rKva"></span></div>
+            <div class="row"><span>MONTHLY QTY:</span><span id="rQty"></span></div>
+
+            <div class="divider"></div>
+
+            <div class="row"><span>Original Total:</span><span id="rOrigTotal"></span></div>
+            <div class="row"><span>Discount Rate:</span><span id="rRate"></span></div>
+            <div class="row"><span>Discount Amount:</span><span id="rDiscount"></span></div>
+
+            <div class="divider"></div>
+
+            <div class="row total-row"><span>FINAL TOTAL:</span><span id="rFinal"></span></div>
+
+            <div class="message-box" id="rMessage"></div>
+        </div>
+        <button style="margin-top: 15px;" onclick="location.reload()">**Thank you for supporting Arizona Supplies Limited Uganda.**</button>
+    </div>
+
+    <script>
+        document.getElementById('calculatorForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const name = document.getElementById('name').value.toUpperCase();
+            const kva = document.getElementById('generator_kva').value;
+            const qty = document.getElementById('generators').value;
+            const originalTotal = parseFloat(document.getElementById('total').value);
+            const discountRate = parseFloat(document.getElementById('discount_rate').value);
+
+            const discountAmount = originalTotal * (discountRate / 100);
+            const finalTotal = originalTotal - discountAmount;
+
+            let message = "";
+            switch (discountRate) {
+                case 10: message = "Silver Member: You saved 10% today!"; break;
+                case 15: message = "Gold Member: You saved 15% today!"; break;
+                case 20: message = "Platinum Member: You saved 20% today! Plus, claim your free maintenance kit!"; break;
+                default: message = "Keep ordering generators to earn higher discounts!"; break;
+            }
+
+            
+            document.getElementById('rName').textContent = name;
+            document.getElementById('rKva').textContent = kva + " kVA";
+            document.getElementById('rQty').textContent = qty + " Generator(s)";
+            document.getElementById('rOrigTotal').textContent = "$" + originalTotal.toFixed(2);
+            document.getElementById('rRate').textContent = discountRate + "%";
+            document.getElementById('rDiscount').textContent = "-$" + discountAmount.toFixed(2);
+            document.getElementById('rFinal').textContent = "$" + finalTotal.toFixed(2);
+            document.getElementById('rMessage').textContent = message;
+
+            // Toggle Display
+            document.getElementById('formSection').style.display = 'none';
+            document.getElementById('receiptSection').style.display = 'block';
+        });
+    </script>
+</body>
+</html>
