@@ -38,7 +38,7 @@
         }
         button:hover { background-color: #1a252f; }
 
-        /* Receipt Styles */
+        
         #receiptSection { display: none; }
         .receipt {
             font-family: 'Courier New', Courier, monospace;
@@ -55,7 +55,7 @@
 </head>
 <body>
 
-    <!-- FORM SECTION -->
+    <
     <div class="container" id="formSection">
         <h2>Arizona Supplies Limited Uganda</h2>
         <form id="calculatorForm">
@@ -112,7 +112,7 @@
         </form>
     </div>
 
-    <!-- RECEIPT SECTION -->
+    <
     <div class="container" id="receiptSection">
         <div class="receipt">
             <h3 style="text-align: center;">ARIZONA SUPPLIES LIMITED UGANDA</h3>
@@ -123,7 +123,7 @@
 
             <div class="row"><span>CUSTOMER:</span><span id="rName"></span></div>
             <div class="row"><span>MODEL:</span><span id="rKva"></span></div>
-            <div class="row"><span>MONTHLY QTY:</span><span id="rQty"></span></div>
+            <div class="row"><span> QUALITY:</span><span id="rQty"></span></div>
 
             <div class="divider"></div>
 
@@ -171,7 +171,7 @@
             document.getElementById('rFinal').textContent = "$" + finalTotal.toFixed(2);
             document.getElementById('rMessage').textContent = message;
 
-            // Toggle Display
+            
             document.getElementById('formSection').style.display = 'none';
             document.getElementById('receiptSection').style.display = 'block';
         });
